@@ -42,6 +42,13 @@ class ViewController: UIViewController {
         resultLabel.text = resultNum
         
     }
+    @IBAction func clear(_ sender: Any) {
+        
+        resultNum = ""
+        resultLabel.text = "0"
+        userInput = false
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
