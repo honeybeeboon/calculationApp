@@ -19,6 +19,8 @@ class ViewController: UIViewController {
             if(sender.titleLabel!.text!=="0"){
                 resultNum = ""
                 userInput = false
+            }else if(sender.titleLabel!.text!=="."){
+                resultNum = "0."
             }
         }else{
             resultNum = resultLabel.text!
