@@ -23,8 +23,12 @@ class ViewController: UIViewController {
                 resultNum = "0."
             }
         }else{
-            resultNum = resultLabel.text!
-            resultNum += (sender.titleLabel?.text!)!
+            if(resultNum.contains(".")&&sender.titleLabel!.text=="."){
+                
+            }else{
+              resultNum = resultLabel.text!
+              resultNum += (sender.titleLabel?.text!)!
+            }
         }
         resultLabel.text = resultNum
         if(resultNum == ""){
