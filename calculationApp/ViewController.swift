@@ -10,11 +10,22 @@ import UIKit
 
 class ViewController: UIViewController {
     @IBOutlet weak var resultLabel: UILabel!
-    
+    var userInput = false
+    var resultNum:String = "0"
     @IBAction func inputNum(_ sender: UIButton) {
-        resultLabel.text = sender.titleLabel!.text
+        if(!userInput){
+            print("yes")
+            userInput = true
+            resultNum = sender.titleLabel!.text!
+        }else{
+             print("no")
+            resultNum = resultLabel.text!
+            resultNum += (sender.titleLabel?.text!)!
+        }
+        resultLabel.text = resultNum
         
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
