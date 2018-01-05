@@ -99,33 +99,44 @@ class ViewController: UIViewController {
         isSymbol = true
      }
         
-        
     }
     
     @IBAction func calc(_ sender: Any) {
-        if(resultNum != ""){
+        if(resultNum != "" && isSymbol != true){
             var calcNum = resultNum
             calcNum = calcNum.replacingOccurrences(of: "×", with: "*")
             calcNum = calcNum.replacingOccurrences(of: "÷", with: "/")
-            var symList:[Character] = []
-            for symbol in calcNum{
+            var tempNum = calcNum
+            var symList:[String] = []
+            for symbol in tempNum{
                 if(symbol == "*" || symbol == "+" || symbol == "-" || symbol == "/"){
-                    symList.append(symbol)
+                    symList.append(String(symbol))
+                    if(tempNum.contains(String(symbol))){
+                         tempNum = tempNum.replacingOccurrences(of: String(symbol), with: " ")
+                    }
                 }
             }
+            symList.append(".")
+            var NumList:[String] = tempNum.components(separatedBy: " ")
+            for (index,num) in NumList.enumerated(){
+                NumList[index] = String(Double(num)!)
+            }
+            
+            let zipped = zip(NumList, symList)
+            let joinNum = zipped.map{$0.0 + $0.1}
+            calcNum = joinNum.joined()
+            calcNum.removeLast()
 
             let expression = NSExpression(format : calcNum)
             let result = expression.expressionValue(with: nil, context: nil) as! Double
             resultNum = String(result)
-            resultLabel.text = String(result)
+            resultLabel.text = String(resultNum)
             userInput = false
             isEqual = true
         }
     }
     
-    @IBAction func printResult(_ sender: Any) {
-        print(resultNum)
-    }
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
