@@ -11,18 +11,23 @@ import UIKit
 class ViewController: UIViewController {
     @IBOutlet weak var resultLabel: UILabel!
     var userInput = false
-    var resultNum:String = "0"
+    var resultNum:String = ""
     @IBAction func inputNum(_ sender: UIButton) {
         if(!userInput){
-
             userInput = true
             resultNum = sender.titleLabel!.text!
+            if(sender.titleLabel!.text!=="0"){
+                resultNum = ""
+                userInput = false
+            }
         }else{
- 
             resultNum = resultLabel.text!
             resultNum += (sender.titleLabel?.text!)!
         }
         resultLabel.text = resultNum
+        if(resultNum == ""){
+            resultLabel.text = "0"
+        }
         
     }
     
