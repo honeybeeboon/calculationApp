@@ -115,9 +115,7 @@ class ViewController: UIViewController {
             }
 
             let expression = NSExpression(format : calcNum)
-            print(expression)
             let result = expression.expressionValue(with: nil, context: nil) as! Double
-            print(result)
             resultNum = String(result)
             resultLabel.text = String(result)
             userInput = false
