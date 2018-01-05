@@ -11,11 +11,20 @@ import UIKit
 class ViewController: UIViewController {
     @IBOutlet weak var resultLabel: UILabel!
     var userInput = false
+    var isEqual = false
     var resultNum:String = ""
+    var secondNum:String = "0"
+    var calcSymbol:String = ""
     @IBAction func inputNum(_ sender: UIButton) {
         if(!userInput){
-            userInput = true
-            resultNum = sender.titleLabel!.text!
+            if(isEqual == true){
+                userInput = true
+                isEqual = false
+                resultNum = sender.titleLabel!.text!
+            }else{
+                userInput = true
+                resultNum += sender.titleLabel!.text!
+            }
             if(sender.titleLabel!.text!=="0"){
                 resultNum = ""
                 userInput = false
@@ -26,7 +35,6 @@ class ViewController: UIViewController {
             if(resultNum.contains(".")&&sender.titleLabel!.text=="."){
                 
             }else{
-              resultNum = resultLabel.text!
               resultNum += (sender.titleLabel?.text!)!
             }
         }
@@ -38,29 +46,73 @@ class ViewController: UIViewController {
     }
     
     @IBAction func plusMinus(_ sender: Any) {
-        if(Int(resultNum)! > 0){
-            resultNum = "-" + resultNum
-        }else{
+        if(resultNum != ""){
+          if((Int(Double(resultNum)!)) >= 0){
+             resultNum = "-" + resultNum
+           }else{
             resultNum = resultNum.replacingOccurrences(of: "-", with: "")
+           }
+            resultLabel.text = resultNum
+        }else{
+            resultLabel.text = "0"
         }
-        resultLabel.text = resultNum
+       
     }
     
     @IBAction func percent(_ sender: Any) {
-        if(resultNum != "0"){
-            resultNum = String(Double(resultNum)! * 0.01)
+        if(resultNum != ""){
+          if(resultNum != "0"){
+            if(!resultNum.contains("=")){
+              resultNum = String(Double(resultNum)! * 0.01)
+            }
+          }
+          resultLabel.text = resultNum
+        }else{
+            resultLabel.text = "0"
         }
-        resultLabel.text = resultNum
     }
     
     @IBAction func clear(_ sender: Any) {
-        
         resultNum = ""
         resultLabel.text = "0"
         userInput = false
         
     }
+    @IBAction func Symbol(_ sender: UIButton) {
+        userInput = true
+        if(sender.titleLabel!.text == "＋"){
+           resultNum += "+"
+            resultLabel.text? += "+"
+        }else if(sender.titleLabel!.text == "-"){
+            resultNum += "-"
+            resultLabel.text? += "-"
+        }else if(sender.titleLabel!.text == "×"){
+            resultNum += "×"
+            resultLabel.text? += "×"
+        }else if(sender.titleLabel!.text == "÷"){
+            resultNum += "÷"
+            resultLabel.text? += "÷"
+        }
+        
+    }
     
+    @IBAction func calc(_ sender: Any) {
+        if(resultNum != ""){
+            var calcNum = resultNum
+            calcNum = calcNum.replacingOccurrences(of: "×", with: "*")
+            calcNum = calcNum.replacingOccurrences(of: "÷", with: "/")
+            let expression = NSExpression(format : calcNum)
+            let result = expression.expressionValue(with: nil, context: nil) as! Double
+            resultNum = String(result)
+            resultLabel.text = String(result)
+            userInput = false
+            isEqual = true
+        }
+    }
+    
+    @IBAction func printResult(_ sender: Any) {
+        print(resultNum)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
