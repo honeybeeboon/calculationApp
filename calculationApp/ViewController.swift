@@ -14,11 +14,11 @@ class ViewController: UIViewController {
     var resultNum:String = "0"
     @IBAction func inputNum(_ sender: UIButton) {
         if(!userInput){
-            print("yes")
+
             userInput = true
             resultNum = sender.titleLabel!.text!
         }else{
-             print("no")
+ 
             resultNum = resultLabel.text!
             resultNum += (sender.titleLabel?.text!)!
         }
@@ -40,8 +40,8 @@ class ViewController: UIViewController {
             resultNum = String(Double(resultNum)! * 0.01)
         }
         resultLabel.text = resultNum
-        
     }
+    
     @IBAction func clear(_ sender: Any) {
         
         resultNum = ""
