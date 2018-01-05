@@ -26,6 +26,23 @@ class ViewController: UIViewController {
         
     }
     
+    @IBAction func plusMinus(_ sender: Any) {
+        if(Int(resultNum)! > 0){
+            resultNum = "-" + resultNum
+        }else{
+            resultNum = resultNum.replacingOccurrences(of: "-", with: "")
+        }
+        resultLabel.text = resultNum
+    }
+    
+    @IBAction func percent(_ sender: Any) {
+        if(resultNum != "0"){
+            resultNum = String(Double(resultNum)! * 0.01)
+        }
+        resultLabel.text = resultNum
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
