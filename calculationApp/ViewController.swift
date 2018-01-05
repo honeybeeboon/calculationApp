@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var resultLabel: UILabel!
     var userInput = false
     var isEqual = false
+    var isSymbol = false
     var resultNum:String = ""
     var secondNum:String = "0"
     var calcSymbol:String = ""
@@ -32,6 +33,7 @@ class ViewController: UIViewController {
                 resultNum = "0."
             }
         }else{
+            isSymbol = false
             if(resultNum.contains(".")&&sender.titleLabel!.text=="."){
                 
             }else{
@@ -80,6 +82,7 @@ class ViewController: UIViewController {
     }
     @IBAction func Symbol(_ sender: UIButton) {
         userInput = true
+      if(isSymbol != true){
         if(sender.titleLabel!.text == "＋"){
            resultNum += "+"
             resultLabel.text? += "+"
@@ -93,6 +96,9 @@ class ViewController: UIViewController {
             resultNum += "÷"
             resultLabel.text? += "÷"
         }
+        isSymbol = true
+     }
+        
         
     }
     
@@ -101,8 +107,17 @@ class ViewController: UIViewController {
             var calcNum = resultNum
             calcNum = calcNum.replacingOccurrences(of: "×", with: "*")
             calcNum = calcNum.replacingOccurrences(of: "÷", with: "/")
+            var symList:[Character] = []
+            for symbol in calcNum{
+                if(symbol == "*" || symbol == "+" || symbol == "-" || symbol == "/"){
+                    symList.append(symbol)
+                }
+            }
+
             let expression = NSExpression(format : calcNum)
+            print(expression)
             let result = expression.expressionValue(with: nil, context: nil) as! Double
+            print(result)
             resultNum = String(result)
             resultLabel.text = String(result)
             userInput = false
