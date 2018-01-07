@@ -107,6 +107,14 @@ class ViewController: UIViewController {
             calcNum = calcNum.replacingOccurrences(of: "×", with: "*")
             calcNum = calcNum.replacingOccurrences(of: "÷", with: "/")
             var tempNum = calcNum
+            print(tempNum)
+            var minus:Character
+            var isMinus = false
+            if(tempNum[tempNum.startIndex] == "-"){
+                minus = tempNum[tempNum.startIndex]
+                tempNum.removeFirst()
+                isMinus = true
+            }
             var symList:[String] = []
             for symbol in tempNum{
                 if(symbol == "*" || symbol == "+" || symbol == "-" || symbol == "/"){
@@ -118,6 +126,7 @@ class ViewController: UIViewController {
             }
             symList.append(".")
             var NumList:[String] = tempNum.components(separatedBy: " ")
+            
             for (index,num) in NumList.enumerated(){
                 NumList[index] = String(Double(num)!)
             }
@@ -130,6 +139,10 @@ class ViewController: UIViewController {
             let expression = NSExpression(format : calcNum)
             let result = expression.expressionValue(with: nil, context: nil) as! Double
             resultNum = String(result)
+            if(isMinus == true){
+                resultNum = "-" + resultNum
+                isMinus = false
+            }
             resultLabel.text = String(resultNum)
             userInput = false
             isEqual = true
